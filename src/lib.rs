@@ -618,7 +618,8 @@ pub mod xinput {
         fn serialize(&self, wire_buf: &mut [u8]) -> usize {
             assert!(wire_buf.len() >= 2);
             unsafe {
-                *(wire_buf.as_mut_ptr() as *mut u16) = self.id();
+                //*(wire_buf.as_mut_ptr() as *mut u16) = self.id();
+                std::ptr::write_unaligned(wire_buf.as_mut_ptr() as *mut u16, self.id());
             }
             2
         }
